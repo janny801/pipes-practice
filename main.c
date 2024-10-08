@@ -21,7 +21,8 @@ int main(int argc, char* argv[])
 
     //"pipe(fd)" initializes the array fd with two integers (representing both the read and write end of the pipe) 
 
-        //"pipe(fd)" returns 0 if successful and -1 if not successful 
+        //"pipe(fd)" returns 0 if successful(pipe is created) and -1 if not sucessful(pipe creation failed )
+
     
     if(pipe(fd)==-1) //error handling 
     { 
@@ -29,6 +30,33 @@ int main(int argc, char* argv[])
         return 1;   
 
     } 
+
+    int id = fork(); 
+
+    //when forking file descriptors get copied over 
+        //file descriptors are also assigned to the newly created process "file descriptors get INHERITED"
+        //file descriptors independent of each other in each process 
+
+    
+
+    if (id ==0)
+    {
+        //2 file descriptors are inherited here 
+            //we are in the child procss since we forked 
+
+        //
+        /*
+        1. ask user to input a number 
+        2. sends to the parent process (child -> parent process) 
+        3. parent process prints it on the screen 
+        
+        */
+
+    }
+
+
+
+
 
 
 
