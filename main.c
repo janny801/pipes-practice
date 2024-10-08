@@ -80,6 +80,8 @@ int main(int argc, char* argv[])
         close(fd[0]); //close since we are now done reading from the pipe 
         
 
+        printf("**message from the parent process** got from child process: %d\n", y); //print out the y value that we got from the child process via the pipe 
+
     }
 
 
