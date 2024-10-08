@@ -40,17 +40,45 @@ int main(int argc, char* argv[])
     
 
     if (id ==0)
-    {
+    {//within child process
+
+        close(fd[0]); //close read end of pipe (since we are not reading from the pipe on this end(on the end of the child process))
+                            //have to do this since file descriptors are inherited (have to manually do this for each process) 
+
+
         //2 file descriptors are inherited here 
             //we are in the child procss since we forked 
 
-        //
-        /*
+        /*  general idea of the program 
         1. ask user to input a number 
         2. sends to the parent process (child -> parent process) 
         3. parent process prints it on the screen 
         
         */
+
+        int x; 
+        printf("input a number: "); 
+        scanf("%d",&x); 
+        write(fd[1], &x, sizeof(int)); 
+        //write to the pipe the address of x (x is the integer that you want to send thru the pipe) 
+            //'sizeof(int) specifies the number of bytes to write (size of int = 4 bytes) ~~ensures that you are writing the correct number of bytes corresponding to an integer 
+
+
+        close(fd[1]); //close write end of pipe (now that we are done writing to the write end of the pipe ) 
+
+
+        
+
+    }
+    else
+    {
+        //now in the parent process
+
+        close(fd[1]); //close the write file descriptor since we are not writing to pipe from parent process
+        int y; 
+        read(fd[0], &y, sizeof(int)); //read the address of some integer in the pipe(saved with variable y) 
+        close(fd[0]); //close since we are now done reading from the pipe 
+        
 
     }
 
