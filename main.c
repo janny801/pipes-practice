@@ -1,5 +1,5 @@
 #include <stdio.h> //standard input/ output like printf
-#include <unistd.h> //pipe(), fork(), close() sys calls
+#include <unistd.h> //pipe(), fork(), close() , write() sys calls 
 #include <stdlib.h> //exit() function 
 #include <sys/types.h> //pid_t data type
 #include <sys/wait.h> //wait() to handle child processes 
@@ -82,7 +82,16 @@ int main(int argc, char* argv[])
 
         close(fd[1]); //close the write file descriptor since we are not writing to pipe from parent process
         int y; 
-        read(fd[0], &y, sizeof(int)); //read the address of some integer in the pipe(saved with variable y) 
+
+
+        if((read(fd[0], &y, sizeof(int)))==-1) //return the number read  (-1 for errors, or 0 for EOF ) 
+        {
+            printf("an error occured with reading from the pipe\n"); 
+            return 3; 
+        }
+        //read the address of some integer in the pipe(saved with variable y) 
+
+
         close(fd[0]); //close since we are now done reading from the pipe 
         
 
