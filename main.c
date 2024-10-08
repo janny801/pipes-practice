@@ -59,7 +59,13 @@ int main(int argc, char* argv[])
         int x; 
         printf("input a number: "); 
         scanf("%d",&x); 
-        write(fd[1], &x, sizeof(int)); 
+
+        //write (return the number written or -1 ~~write error handling code 
+        if((write(fd[1], &x, sizeof(int)) )==-1)
+        {
+            printf("an error occured with writing to the pipe\n") ; 
+            return 2; //different that prev used error 'return 1' 
+        }
         //write to the pipe the address of x (x is the integer that you want to send thru the pipe) 
             //'sizeof(int) specifies the number of bytes to write (size of int = 4 bytes) ~~ensures that you are writing the correct number of bytes corresponding to an integer 
 
@@ -91,10 +97,8 @@ int main(int argc, char* argv[])
 
 
 
-    
-
      
-    
+
 
 
 
